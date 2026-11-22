@@ -525,7 +525,7 @@ git push
 A: GitHub Actions 定时任务可能有 5-15 分钟延迟，且仅在仓库有活动时才触发。长时间无 commit 可能导致 workflow 被禁用。
 
 **Q: 如何查看历史报告？**
-A: Actions → 选择运行记录 → Artifacts → 下载 `analysis-reports-xxx`
+A: Actions → 选择运行记录 → Artifacts → 下载 `analysis-reports-xxx`；解压后除完整版 `report_YYYYMMDD.md` 外，还有同名的一句话简报 `report_YYYYMMDD_simple.md`（大盘一句话、结论总览、每只股一行）。
 
 **Q: 免费额度够用吗？**
 A: 每次运行约 2-5 分钟，一个月 22 个工作日 = 44-110 分钟，远低于 2000 分钟限制。
