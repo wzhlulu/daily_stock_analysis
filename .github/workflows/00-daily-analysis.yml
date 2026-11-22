@@ -573,6 +573,12 @@ jobs:
             python main.py $FORCE_RUN_ARG
           fi
       
+      - name: 生成一句话简报
+        # 简报只是完整版报告的派生摘要：失败不阻塞本次运行，artifact
+        # 仍会上传（上传步骤带 if: always()）。
+        continue-on-error: true
+        run: |
+          python scripts/make_concise_report.py
       - name: 上传分析报告
         uses: actions/upload-artifact@v6
         if: always()
