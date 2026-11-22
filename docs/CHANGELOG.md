@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- [新功能] 每日分析运行后自动生成一句话简报（reports/report_YYYYMMDD_simple.md），与完整版报告一同上传为 artifact；简报含大盘一句话、结论总览、每只股一行（价格/涨跌幅/动作/一句话决策/买卖点位）及数据缺失提醒，由 scripts/make_concise_report.py 从完整版报告解析生成，不调用 LLM，完整版报告格式不变。
 - [修复] 新增幂等的 `py_mini_racer.MiniRacer` 线程安全保护（`src/utils/mini_racer_guard.py`），在应用初始化与数据源层串行化 V8 isolate 创建与求值调用，避免多线程并发分析（`MAX_WORKERS > 1`）时触发原生 `SIGTRAP` 崩溃（Fixes #2586）。
 - [新功能] 新增 agent-agnostic 插件市场入口（`.agents/plugins/marketplace.json`）与 Codex/Claude Code 插件清单（`plugin/`）；将 `stock_analyzer` 正文迁至 `plugin/skills/stock_analyzer/SKILL.md`，根目录 `SKILL.md` 保留为普通文件副本（兼容 `core.symlinks=false` / OpenClaw）；技能明确要求驱动已部署的 DSA 检出，示例先 `chdir` 到检出根目录以共用相对库路径与复盘锁，大盘复盘在支持 `send_notification` 时默认不推送且对旧检出安全拒绝回退；HTTP 对话内个股须 `"notify": false`、大盘复盘须 `"send_notification": false`（`MarketReviewRequest` 亦接受 `notify` 别名）；只读 MCP 仍按完整指南在 checkout 中手动配置（不写入插件包）。
 - [新功能] 新增基于 Astro + Starlight 的官方官网与文档中心子项目（`apps/dsa-site/`），采用 Obsidian Bento 视觉与 5 大支柱文档体系，构建时直读主仓 `docs/`、`strategies/` 与 `docs/architecture/api_spec.json` 生成交互式 OpenAPI 浏览器与中英文全文搜索，并配套 `.dockerignore` 与独立 `site-gate` CI 门禁。
